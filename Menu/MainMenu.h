@@ -23,7 +23,9 @@ private:
 
     void showMenu() const;
 
-    bool validateInput(String& input) const;
+    int validateInput();
+    bool isValidInput(String& input) const;
+    
     void processInput() const;
     
     void exitApp();

@@ -1,9 +1,4 @@
 #include "GlobalConfig.h"
-#include "../TypedefRepo.h"
-
-#include <iostream>
-#include <fstream>
-#include <sstream>
 
 
 GlobalConfig* GlobalConfig::sharedInstance = nullptr;

@@ -3,6 +3,10 @@
 
 #include "../TypeDefRepo.h"
 #include "MainMenu.h"
+#include "../Config/GlobalConfig.h"
+#include "../Prime/ASearch.h"
+#include "../Prime/SearchRange.h"
+#include "../Prime/SearchLinear.h"
 
 class MainMenu
 {
@@ -27,6 +31,6 @@ private:
     bool isValidInput(String& input) const;
     
     void processInput() const;
-    
+
     void exitApp();
 };

@@ -35,6 +35,7 @@ void MainMenu::destroy()
 void MainMenu::startApp()
 {
     int variant = 0;
+    ASearch* searchPrimeMethod = nullptr;
 
     this->showMenu();
     variant = this->validateInput();
@@ -42,19 +43,28 @@ void MainMenu::startApp()
     switch (variant) {
     case '1':
         cout << "Choice 1" << endl;
+        searchPrimeMethod = new SearchRange(true);
         break;
     case '2':
         cout << "Choice 2" << endl;
+        searchPrimeMethod = new SearchRange(false);
         break;
     case '3':
         cout << "Choice 3" << endl;
+        searchPrimeMethod = new SearchLinear(true);
         break;
     case '4':
         cout << "Choice 4" << endl;
+        searchPrimeMethod = new SearchLinear(false);
         break;
     default:
         cout << "Exiting..." << endl;
         this->exitApp();
+    }
+
+    if (searchPrimeMethod != nullptr) {
+        searchPrimeMethod->searchPrimes(GlobalConfig::getInstance()->getTargetNumber());
+        delete searchPrimeMethod;
     }
 }
 

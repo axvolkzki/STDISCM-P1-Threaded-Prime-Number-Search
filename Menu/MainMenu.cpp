@@ -35,7 +35,9 @@ void MainMenu::destroy()
 void MainMenu::startApp()
 {
     this->showMenu();
-    this->processInput();
+    //this->processInput();
+
+    this->exitApp();
 }
 
 bool MainMenu::isRunning() const
@@ -48,9 +50,13 @@ bool MainMenu::isRunning() const
 void MainMenu::showMenu() const
 {
     cout << "Welcome to Prime Finder!" << endl;
-    cout << "Choose a variation for the configuration:" << endl;
-    cout << "1. Start Game" << endl;
-    cout << "2. Exit" << endl;
+    cout << "Choose a variation for the configuration of checking and printing prime numbers:" << endl;
+    cout << "[1] Search for prime numbers in a range and print them immediately" << endl;
+    cout << "[2] Search for prime numbers in a range and print them at the end" << endl;
+    cout << "[3] Search for prime numbers linearly and print them immediately" << endl;
+    cout << "[4] Search for prime numbers linearly and print them at the end" << endl;
+    cout << "[5] Exit" << endl;
+    cout << endl;
 }
 
 void MainMenu::exitApp()

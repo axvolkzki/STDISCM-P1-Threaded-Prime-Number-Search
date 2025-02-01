@@ -3,13 +3,13 @@
 #include <mutex>
 
 #include "../TypeDefRepo.h"
+#include "../Command/APrint.h"
 
 class ASearch
 {
 public:
-    virtual void searchPrimes(int targetNumber) = 0;
+    virtual void searchPrimes(int start, int end, int threadId, char printerType, APrint* printer) = 0;
     virtual ~ASearch() = default;
 
-protected:
-    bool isPrime(int number);
+
 };

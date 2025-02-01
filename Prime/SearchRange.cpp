@@ -2,26 +2,39 @@
 
 mutex SearchRange::outputMutex;
 
-void SearchRange::searchPrimes(int targetNumber)
+void SearchRange::searchPrimes(int start, int end, int threadId, char printType, APrint* printer)
 {
-    IntVector primes;
+    // cout << "[Thread " << threadId << "] Searching for prime numbers from " << start << " to " << end << endl;
 
-    for (int i = 2; i <= targetNumber; i++) {
+    lock_guard<mutex> lock(outputMutex);
+    for (int i = start; i <= end; i++) {
         if (this->isPrime(i)) {
-            if (this->printImmediately) {
-                lock_guard<mutex> lock(outputMutex);
-                cout << i << endl;
-            }
-            else {
-                primes.push_back(i);
-            }
+
+            // if (printType == 'A') {
+            //     printer->logPrime(i, threadId);
+            // }
+            // else {
+            //     cout << "Printing at the end" << endl;
+            //     printer->logPrime(i, threadId);
+            // }
+            printer->logPrime(i, threadId);
         }
     }
 
-    if (!this->printImmediately) {
-        lock_guard<mutex> lock(outputMutex);
-        for (int prime : primes) {
-            cout << prime << endl;
+    // cout << "[Thread " << threadId << "] Finished searching for prime numbers from " << start << " to " << end << endl;
+}
+
+bool SearchRange::isPrime(int num)
+{
+    if (num <= 1) {
+        return false;
+    }
+
+    for (int i = 2; i * i <= num; i++) {
+        if (num % i == 0) {
+            return false;
         }
     }
+
+    return true;
 }

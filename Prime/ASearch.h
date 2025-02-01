@@ -13,6 +13,6 @@ public:
 
 protected:
     static std::mutex outputMutex;
-
-    bool isPrime(int num);
 };
+
+std::mutex ASearch::outputMutex;

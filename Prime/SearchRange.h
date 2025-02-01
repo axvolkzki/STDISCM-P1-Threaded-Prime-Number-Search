@@ -9,4 +9,7 @@ class SearchRange : public ASearch
 public:
     SearchRange() = default;
     void searchPrimes(int start, int end, int threadId, char printType, APrint* printer) override;
+
+private:
+    bool isPrime(int number);
 };

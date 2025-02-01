@@ -7,11 +7,9 @@
 class SearchRange : public ASearch
 {
 public:
-    SearchRange(bool printImmediately) : printImmediately(printImmediately) {}
-
-    void searchPrimes(int targetNumber) override;
+    SearchRange() = default;
+    void searchPrimes(int start, int end, int threadId, char printType, APrint* printer) override;
 
 private:
-    bool printImmediately;
-    static mutex outputMutex;
+    bool isPrime(int number);
 };

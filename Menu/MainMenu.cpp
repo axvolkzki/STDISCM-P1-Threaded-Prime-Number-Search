@@ -34,39 +34,42 @@ void MainMenu::destroy()
 
 void MainMenu::startApp()
 {
-    int variant = 0;
+    char printType;
     ASearch* searchPrimeMethod = nullptr;
 
     this->showMenu();
-    variant = this->validateInput();
+    this->variant = this->validateInput();
 
-    switch (variant) {
+    switch (this->variant) {
     case '1':
-        cout << "Choice 1" << endl;
-        searchPrimeMethod = new SearchRange(true);
+        searchPrimeMethod = new SearchRange();
+        printType = 'A';
         break;
     case '2':
-        cout << "Choice 2" << endl;
-        searchPrimeMethod = new SearchRange(false);
+        searchPrimeMethod = new SearchRange();
+        printType = 'B';
         break;
-    case '3':
-        cout << "Choice 3" << endl;
-        searchPrimeMethod = new SearchLinear(true);
-        break;
-    case '4':
-        cout << "Choice 4" << endl;
-        searchPrimeMethod = new SearchLinear(false);
-        break;
+    // case '3':
+    //     searchPrimeMethod = new SearchLinear();
+    //     printType = 'A';
+    //     break;
+    // case '4':
+    //     searchPrimeMethod = new SearchLinear();
+    //     printType = 'B';
+    //     break;
     default:
-        cout << "Exiting..." << endl;
         this->exitApp();
+        return;
     }
 
     if (searchPrimeMethod != nullptr) {
-        searchPrimeMethod->searchPrimes(GlobalConfig::getInstance()->getTargetNumber());
+        PrimeManager manager(searchPrimeMethod, GlobalConfig::getInstance()->getTargetNumber(), GlobalConfig::getInstance()->getNumberOfThreads(), printType);
+        manager.executeSearch(this->variant);
+        
         delete searchPrimeMethod;
     }
 }
+
 
 bool MainMenu::isRunning() const
 {

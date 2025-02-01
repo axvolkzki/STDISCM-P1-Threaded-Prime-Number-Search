@@ -2,6 +2,7 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <iomanip>
 
 #include "../TypedefRepo.h"
 
@@ -18,6 +19,7 @@ public:
 
     int getNumberOfThreads() const;
     int getTargetNumber() const;
+    String getTimestamp() const;
 
 private:
 	GlobalConfig();

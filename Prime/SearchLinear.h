@@ -7,11 +7,5 @@
 class SearchLinear : public ASearch
 {
 public:
-    SearchLinear(bool printImmediately) : printImmediately(printImmediately) {}
-
-    void searchPrimes(int targetNumber) override;
-
-private:
-    bool printImmediately;
-    static mutex outputMutex;
+    void searchPrimes(int start, int end, int threadId, char printType, APrint* printer) override;
 };

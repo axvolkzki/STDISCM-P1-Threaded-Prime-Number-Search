@@ -4,6 +4,7 @@
 #include "../TypeDefRepo.h"
 #include "MainMenu.h"
 #include "../Config/GlobalConfig.h"
+#include "../Prime/PrimeManager.h"
 #include "../Prime/ASearch.h"
 #include "../Prime/SearchRange.h"
 #include "../Prime/SearchLinear.h"
@@ -24,6 +25,8 @@ private:
     static MainMenu* sharedInstance;
 
     bool running = true;
+    int variant = 0;
+
 
     void showMenu() const;
 

@@ -8,6 +8,7 @@ void PrimeManager::executeSearch(int variant)
         int end = range;
 
         cout << "[executeSearch in PrimeManager] Searching for prime numbers from 1 to " << this->targetNumber << " using " << this->numThreads << " threads..." << endl;
+        cout << "Start time: " << GlobalConfig::getInstance()->getTimestamp() << endl;
 
         for (int i = 0; i < this->numThreads; i++) {
             if (i == this->numThreads - 1) {
@@ -27,6 +28,8 @@ void PrimeManager::executeSearch(int variant)
             cout << "[executeSearch in PrimeManager] All threads are done. Printing prime numbers..." << endl;
             this->printer->printPrimes();
         }
+
+        cout << "End time: " << GlobalConfig::getInstance()->getTimestamp() << endl;
 
     } else if (variant == '3' || variant == '4') {
         cout << "[executeSearch in PrimeManager] Searching for prime numbers from 1 to " << this->targetNumber << " using " << this->numThreads << " threads..." << endl;

@@ -19,9 +19,12 @@ void PrintAtTheEnd::printPrimes()
 {
     lock_guard<mutex> lock(printMutex);
     for (auto& prime : primes) {
-        auto now = system_clock::now();
-        time_t now_c = system_clock::to_time_t(now);
+        // auto now = system_clock::now();
+        // time_t now_c = system_clock::to_time_t(now);
+        // cout << "[Thread " << std::get<0>(prime) << "] Prime found: " << std::get<1>(prime)
+        //     << " at " << ctime(&now_c);
+
         cout << "[Thread " << std::get<0>(prime) << "] Prime found: " << std::get<1>(prime)
-            << " at " << ctime(&now_c);
+         << " at " << GlobalConfig::getInstance()->getTimestamp() << endl;
     }
 }

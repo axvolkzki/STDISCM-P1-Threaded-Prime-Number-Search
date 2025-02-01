@@ -4,6 +4,7 @@
 #include <mutex>
 
 #include "../TypeDefRepo.h"
+#include "../Config/GlobalConfig.h"
 #include "APrint.h"
 
 class PrintImmediately : public APrint

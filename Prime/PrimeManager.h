@@ -3,7 +3,10 @@
 #include <thread>
 #include <mutex>
 
+#include <condition_variable>
+
 #include "../TypeDefRepo.h"
+#include "../Config/GlobalConfig.h"
 #include "ASearch.h"
 #include "../Command/APrint.h"
 #include "../Command/PrintImmediately.h"
@@ -35,4 +38,7 @@ private:
     APrint* printer;
     ThreadVector threads;
     std::mutex mutex;  // For synchronizing output or shared data
+
+    std::condition_variable cv;
+    std::atomic<int> ready{0};
 };

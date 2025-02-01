@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <atomic>
 
 #include "../TypeDefRepo.h"
 #include "ASearch.h"

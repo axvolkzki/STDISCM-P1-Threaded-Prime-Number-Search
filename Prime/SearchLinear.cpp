@@ -9,26 +9,64 @@ void SearchLinear::searchPrimes(int start, int end, int numThreads, char printTy
     int threadId = 0;
     vector<int> primeNumbers = {2, 3};
     
+    // Initialize threads
     this->initializeThreads(threads);
 
     // Iterate through the range of numbers
-    for (int n = start; n < end; n++) {
+    for (int n = start; n < end; n++) {     // ReadyQueue for all the number to be checked
         this->colors.red();
-        cout << "\nCurrent number: " << n << endl;
-        
+        cout << "\nCurrent number: " << n << endl;  // Print the current number
         this->colors.reset();
-        threadId = this->availableThread(threads);
+
+        int currentThread = 0;
         int divisor = 0;
 
-        do {
-            if (threadId != -1 && divisor < primeNumbers.size()) {
-                threads[threadId].first = false;
-                threads[threadId].second = thread(&SearchLinear::worker, this, n, primeNumbers[divisor], threadId, ref(threads), printType, printer, ref(primeNumbers));
-
-                threadId = this->availableThread(threads);
-                divisor++;
+        while(threads[currentThread].first == true) { // Check if the thread is available
+            if (divisor < primeNumbers.size()) { // Check if the divisor is less than the size of the primeNumbers
+                threads[currentThread].first = false; // Set the thread to false
+                threads[currentThread].second = thread(&SearchLinear::worker, this, n, primeNumbers[divisor], currentThread, ref(threads), printType, printer, ref(primeNumbers)); // Start the thread
+                divisor++; // Increment the divisor
             }
-        } while (threadId != -1 && divisor < primeNumbers.size());
+            
+            currentThread++;
+
+            if (currentThread == numThreads && divisor < primeNumbers.size()) { // Check if the currentThread is equal to the numThreads and the divisor is less than the size of the primeNumbers
+                currentThread = 0;
+            }
+
+             
+        }
+
+
+        // wait for all threads to finish before changing the current number
+        for (int t = 0; t < numThreads; t++)
+        {
+            if (threads[t].second.joinable())
+            {
+                threads[t].second.join();
+            }
+        }
+
+
+
+
+
+
+
+
+
+        // threadId = this->availableThread(threads);
+        // int divisor = 0;
+
+        // do {
+        //     if (threadId != -1 && divisor < primeNumbers.size()) {
+        //         threads[threadId].first = false;
+        //         threads[threadId].second = thread(&SearchLinear::worker, this, n, primeNumbers[divisor], threadId, ref(threads), printType, printer, ref(primeNumbers));
+
+        //         threadId = this->availableThread(threads);
+        //         divisor++;
+        //     }
+        // } while (threadId != -1 && divisor < primeNumbers.size());
     }
     
     // Wait for all threads to finish

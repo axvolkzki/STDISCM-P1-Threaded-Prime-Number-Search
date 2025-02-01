@@ -49,14 +49,14 @@ void MainMenu::startApp()
         searchPrimeMethod = new SearchRange();
         printType = 'B';
         break;
-    // case '3':
-    //     searchPrimeMethod = new SearchLinear();
-    //     printType = 'A';
-    //     break;
-    // case '4':
-    //     searchPrimeMethod = new SearchLinear();
-    //     printType = 'B';
-    //     break;
+    case '3':
+        searchPrimeMethod = new SearchLinear();
+        printType = 'A';
+        break;
+    case '4':
+        searchPrimeMethod = new SearchLinear();
+        printType = 'B';
+        break;
     default:
         this->exitApp();
         return;

@@ -21,7 +21,9 @@ void PrimeManager::executeSearch(int variant)
         }
 
         for (auto& thread : this->threads) {
-            thread.join();
+            if (thread.joinable()) {
+                thread.join();
+            }
         }
 
         if (this->printType == 'B') {
@@ -33,10 +35,20 @@ void PrimeManager::executeSearch(int variant)
 
     } else if (variant == '3' || variant == '4') {
         cout << "[executeSearch in PrimeManager] Searching for prime numbers from 1 to " << this->targetNumber << " using " << this->numThreads << " threads..." << endl;
+        cout << "Start time: " << GlobalConfig::getInstance()->getTimestamp() << endl;
+
+        this->searchLinear(this->targetNumber, this->numThreads, this->printType);
+
+        cout << "End time: " << GlobalConfig::getInstance()->getTimestamp() << endl;
     }
 }
 
 void PrimeManager::searchByRange(int start, int end, int threadId, char printType)
 {
     this->searchMethod->searchPrimes(start, end, threadId, printType, this->printer);
+}
+
+void PrimeManager::searchLinear(int targetNumber, int numberOfThreads, char printType)
+{
+    this->searchMethod->searchPrimes(1, targetNumber, numberOfThreads, printType, this->printer);
 }

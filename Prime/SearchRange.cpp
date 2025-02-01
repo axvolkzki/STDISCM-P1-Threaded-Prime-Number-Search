@@ -28,6 +28,7 @@ bool SearchRange::isPrime(int number)
         return false;
     }
 
+    // Checks up to the square root of the number
     for (int i = 2; i * i <= number; i++) {
         if (number % i == 0) {
             return false;

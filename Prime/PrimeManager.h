@@ -29,8 +29,6 @@ public:
     void executeSearch(int variant);
 
 private:
-    void searchByRange(int start, int end, int threadId, char printType);
-
     ASearch* searchMethod;
     int numThreads;
     int targetNumber;
@@ -38,6 +36,9 @@ private:
     APrint* printer;
     ThreadVector threads;
     std::mutex mutex;  // For synchronizing output or shared data
+
+    void searchByRange(int start, int end, int threadId, char printType);
+    void searchLinear(int targetNumber, int numberOfThreads, char printType);
 
     std::condition_variable cv;
     std::atomic<int> ready{0};

@@ -14,5 +14,3 @@ public:
 protected:
     static std::mutex outputMutex;
 };
-
-std::mutex ASearch::outputMutex;

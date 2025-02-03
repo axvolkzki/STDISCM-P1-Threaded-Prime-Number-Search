@@ -1,5 +1,7 @@
 #include "GlobalConfig.h"
 
+#include <chrono>
+
 
 GlobalConfig* GlobalConfig::sharedInstance = nullptr;
 

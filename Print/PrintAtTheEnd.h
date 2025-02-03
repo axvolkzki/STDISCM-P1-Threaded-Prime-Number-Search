@@ -2,6 +2,8 @@
 #include <iostream>
 #include <chrono>
 #include <mutex>
+#include <vector>
+#include <tuple>
 
 #include "../TypeDefRepo.h"
 #include "../Config/GlobalConfig.h"
@@ -10,14 +12,12 @@
 class PrintAtTheEnd : public APrint
 {
 public:
-    static PrintAtTheEnd* getInstance();
+    PrintAtTheEnd() = default;
     void logPrime(int prime, int threadId) override;
 
-    void printPrimes() override;
+    void printPrimes(int prime, int threadId) override;
 
 private:
-    PrintAtTheEnd() = default;
-    std::vector<std::tuple<int, int, std::chrono::time_point<std::chrono::system_clock>>> primes;
-
     std::mutex printMutex;
+    std::vector<std::tuple<int, int, std::chrono::time_point<std::chrono::system_clock>>> primes;
 };

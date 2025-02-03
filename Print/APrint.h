@@ -1,5 +1,6 @@
 #pragma once
-#include <vector>
+#include <iostream>
+#include <mutex>
 
 #include "../TypeDefRepo.h"
 
@@ -8,7 +9,6 @@ class APrint
 public:
     virtual ~APrint() = default;
     virtual void logPrime(int prime, int threadId) = 0;
-    virtual void printPrimes() = 0;
-
+    virtual void printPrimes(int prime, int threadId) = 0;
 };
 

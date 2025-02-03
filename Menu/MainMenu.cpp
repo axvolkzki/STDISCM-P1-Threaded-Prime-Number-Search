@@ -1,4 +1,10 @@
-#include "MainMenu.h"  
+#include "MainMenu.h"
+
+#include "../Variation/VariationManager.h"
+#include "../PrimeSearch/SearchRange.h"
+#include "../PrimeSearch/SearchLinear.h"
+#include "../Print/PrintImmediately.h"
+#include "../Print/PrintAtTheEnd.h"
 
 
 
@@ -32,41 +38,40 @@ void MainMenu::destroy()
     }
 }
 
-void MainMenu::startApp()
+void MainMenu::start()
 {
-    char printType;
-    ASearch* searchPrimeMethod = nullptr;
-
     this->showMenu();
     this->variant = this->validateInput();
 
     switch (this->variant) {
-    case '1':
-        searchPrimeMethod = new SearchRange();
-        printType = 'A';
-        break;
-    case '2':
-        searchPrimeMethod = new SearchRange();
-        printType = 'B';
-        break;
-    case '3':
-        searchPrimeMethod = new SearchLinear();
-        printType = 'A';
-        break;
-    case '4':
-        searchPrimeMethod = new SearchLinear();
-        printType = 'B';
-        break;
-    default:
-        this->exitApp();
-        return;
+        case 1:   // Search for prime numbers in a range and print them immediately
+            this->searchMethod = new SearchRange();
+            this->printer = new PrintImmediately();
+            break;
+        case 2:   // Search for prime numbers in a range and print them at the end
+            this->searchMethod = new SearchRange();
+            this->printer = new PrintAtTheEnd();
+            break;
+        case 3:   // Search for prime numbers linearly and print them immediately
+            this->searchMethod = new SearchLinear();
+            this->printer = new PrintImmediately();
+            break;
+        case 4:   // Search for prime numbers linearly and print them at the end
+            this->searchMethod = new SearchLinear();
+            this->printer = new PrintAtTheEnd();
+            break;
+        default:
+            this->exit();
+            break;
     }
 
-    if (searchPrimeMethod != nullptr) {
-        PrimeManager manager(searchPrimeMethod, GlobalConfig::getInstance()->getTargetNumber(), GlobalConfig::getInstance()->getNumberOfThreads(), printType);
-        manager.executeSearch(this->variant);
-        
-        delete searchPrimeMethod;
+    if (this->running) {
+        this->displayCurrentConfig();
+
+        if (searchMethod != nullptr && printer != nullptr) {
+            VariationManager variationManager(GlobalConfig::getInstance()->getTargetNumber(), GlobalConfig::getInstance()->getNumberOfThreads(), this->searchMethod, this->printer, this->variant);
+            variationManager.executeVariation();
+        }
     }
 }
 
@@ -90,6 +95,16 @@ void MainMenu::showMenu() const
     cout << endl;
 }
 
+void MainMenu::displayCurrentConfig() const
+{
+    cout << "Current configuration:" << endl;
+    cout << "Number of threads  : " << GlobalConfig::getInstance()->getNumberOfThreads() << endl;
+    cout << "Target number      : " << GlobalConfig::getInstance()->getTargetNumber() << endl;
+    cout << "Variant            : " << this->variant << endl;
+    cout << endl;
+}
+
+
 int MainMenu::validateInput()
 {
     String input;
@@ -108,7 +123,7 @@ int MainMenu::validateInput()
         attemptInput = true;
     } while (!validInput);
 
-    return input[0];
+    return input[0] - '0';
 }
 
 bool MainMenu::isValidInput(String& input) const
@@ -126,7 +141,7 @@ bool MainMenu::isValidInput(String& input) const
     return true;
 }
 
-void MainMenu::exitApp()
+void MainMenu::exit()
 {
     this->running = false;
 }

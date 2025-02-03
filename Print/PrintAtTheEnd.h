@@ -13,9 +13,9 @@ class PrintAtTheEnd : public APrint
 {
 public:
     PrintAtTheEnd() = default;
-    void logPrime(int prime, int threadId) override;
+    void logPrime(int prime, int threadId, char variant) override;
 
-    void printPrimes(int prime, int threadId) override;
+    void printPrimes(int prime, int threadId, char variant) override;
 
 private:
     std::mutex printMutex;

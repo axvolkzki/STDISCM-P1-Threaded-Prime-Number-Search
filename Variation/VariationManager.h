@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include <thread>
+#include <mutex>
 
 #include "../TypeDefRepo.h"
 #include "../Helper/Colors.h"
@@ -26,6 +27,7 @@ private:
 
     vector<pair<int, std::thread>> threads;
     Colors color;
+    std::mutex variationMutex;
 
     void executeVariant1();
     void executeVariant2();

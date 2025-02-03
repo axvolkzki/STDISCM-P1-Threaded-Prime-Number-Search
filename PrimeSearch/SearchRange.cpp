@@ -2,15 +2,21 @@
 
 #include <cmath>  // sqrt
 
-void SearchRange::searchPrimes(int start, int end, int threadId, APrint* printer)
+void SearchRange::searchPrimes(int start, int end, int threadId, APrint* printer, std::shared_ptr<std::atomic<bool>> threadState, char variant)
 {
+    // change the state of the thread to true
+    threadState->store(true);
+
     for (int i = start; i <= end; i++) {
         if (this->isPrime(i)) {
-            printer->logPrime(i, threadId);
+            printer->logPrime(i, threadId, variant);
         }
     }
+
+    threadState->store(false);
 }
 
+// https://www.youtube.com/watch?v=d5cLIiTSoTA
 bool SearchRange::isPrime(int number)
 {
     if (number <= 1) {

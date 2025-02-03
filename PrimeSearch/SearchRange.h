@@ -10,7 +10,5 @@ public:
     SearchRange() = default;
     
     void searchPrimes(int start, int end, int threadId, APrint* printer) override;
-
-// private:
-//     bool isPrime(int number);
+    bool isPrime(int number) override;
 };

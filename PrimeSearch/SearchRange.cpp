@@ -1,5 +1,7 @@
 #include "SearchRange.h"
 
+#include <cmath>  // sqrt
+
 void SearchRange::searchPrimes(int start, int end, int threadId, APrint* printer)
 {
     for (int i = start; i <= end; i++) {
@@ -9,18 +11,27 @@ void SearchRange::searchPrimes(int start, int end, int threadId, APrint* printer
     }
 }
 
-// bool SearchRange::isPrime(int number)
-// {
-//     if (number <= 1) {
-//         return false;
-//     }
+bool SearchRange::isPrime(int number)
+{
+    if (number <= 1) {
+        return false;
+    }
 
-//     // Checks up to the square root of the number
-//     for (int i = 2; i * i <= number; i++) {
-//         if (number % i == 0) {
-//             return false;
-//         }
-//     }
+    // Checks up to the square root of the number
+    // for (int i = 2; i * i <= number; i++) {
+    //     if (number % i == 0) {
+    //         return false;
+    //     }
+    // }
 
-//     return true;
-// }
+    // return true;
+
+    // Optimized version
+    for (int i = 2; i <= sqrt(number); i++) {
+        if (number % i == 0) {
+            return false;
+        }
+    }
+
+    return true;
+}

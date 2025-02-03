@@ -11,8 +11,8 @@ public:
     virtual ~ASearch() = default;
     virtual void searchPrimes(int start, int end, int threadId, APrint* printer) = 0;
 
+    virtual bool isPrime(int number) = 0;
+
 protected:
     static std::mutex searchMutex;
-
-    bool isPrime(int number);
 };

@@ -75,7 +75,7 @@ void VariationManager::executeVariant2()
 
 void VariationManager::executeVariant3()
 {
-    std::vector<bool> isPrime(this->targetNumber + 1, false);
+    std::vector<int> allPrimes;
     std::atomic<bool> isPrimeFlag = true;
 
     for (int i = 1; i <= this->targetNumber; i++) {
@@ -103,6 +103,9 @@ void VariationManager::executeVariant3()
             color.green();
             cout << "Result: " << i << " is a prime number" << endl;
             color.reset();
+
+            // Add
+            allPrimes.push_back(i);
         }
 
         // reset the flag
@@ -110,10 +113,56 @@ void VariationManager::executeVariant3()
     }
 
     this->joinAllThreads();
+
+    color.green();
+    cout << "\nAll primes: ";
+    for (auto prime : allPrimes) {
+        cout << prime << " ";
+    }
+    cout << endl;
+    color.reset();
 }
 
 void VariationManager::executeVariant4()
 {
+    std::vector<int> allPrimes;
+    std::atomic<bool> isPrimeFlag = true;
+
+    for (int i = 1; i <= this->targetNumber; i++) {
+
+        {
+            lock_guard<mutex> lock(this->variationMutex);
+            color.yellow();
+            cout << "\nChecking: " << i << endl;
+            color.reset();
+        }
+
+        for (int t = 0; t < this->numThreads; t++) {
+            threads.emplace_back(t, std::thread(&ASearch::searchPrimes, searchMethod, i, i, t, std::ref(this->printer), 'L', std::ref(isPrimeFlag)));
+        }
+
+        this->joinAllThreads();
+
+        if (isPrimeFlag && i != 1) {
+            // Add
+            allPrimes.push_back(i);
+        }
+
+        // reset the flag
+        isPrimeFlag = true;
+
+        this->printer->printPrimes(0, 0, 'L');
+    }
+
+    this->joinAllThreads();
+
+    color.green();
+    cout << "\nAll primes: ";
+    for (auto prime : allPrimes) {
+        cout << prime << " ";
+    }
+    cout << endl;
+    color.reset();
 }
 
 void VariationManager::joinAllThreads()

@@ -6,41 +6,56 @@
 
 void SearchLinear::searchPrimes(int start, int end, int threadID, APrint *printer, std::shared_ptr<std::atomic<bool>> threadState, char variant)
 {
-    cout << "Debug: SearchLinear::searchPrimes" << endl;
-
+    int numThreads = GlobalConfig::getInstance()->getNumberOfThreads();
+    bool isPrime = false;
     
     // change the state of the thread to true
     threadState->store(true);
-    int numThreads = GlobalConfig::getInstance()->getNumberOfThreads();
 
-    for (int i = start; i <= end; i += numThreads) {
-        int currentNumber = i;
-
-        lock_guard<mutex> lock(this->searchMutex);
-        cout << "Current number: " << currentNumber << endl;
-
-        for (int divisor = 2; divisor <= std::sqrt(currentNumber); ++divisor) {
-            // if (currentNumber % divisor == 0) {
-            //     break;
-            //     printer->logPrime(currentNumber, threadID, variant);
-            // }
-            // // if (divisor == std::sqrt(currentNumber)) {
-            // //     lock_guard<mutex> lock(this->printMutex);
-            // //     printer->printPrimes(currentNumber, numThreads, variant);
-            // // }
-
-            printer->logPrime(currentNumber, threadID, variant);
-        }
-
-        if (isPrime(currentNumber) && currentNumber != 1) {
+    for (int divisor = threadID + 2; divisor < start; divisor += numThreads) {
+        {
             lock_guard<mutex> lock(this->searchMutex);
-            colors.red();
-            cout << "Current number: " << currentNumber << " is prime" << endl;
-            colors.reset();
+            printer->logPrime(divisor, threadID, variant);
         }
 
-        cout << endl;
+        if (start % divisor == 0) {
+            return;
+        }
     }
+
+
+
+
+    // int numThreads = GlobalConfig::getInstance()->getNumberOfThreads();
+
+    // for (int i = start; i <= end; i += numThreads) {
+    //     int currentNumber = i;
+
+    //     lock_guard<mutex> lock(this->searchMutex);
+    //     cout << "Current number: " << currentNumber << endl;
+
+    //     for (int divisor = 2; divisor <= std::sqrt(currentNumber); ++divisor) {
+    //         // if (currentNumber % divisor == 0) {
+    //         //     break;
+    //         //     printer->logPrime(currentNumber, threadID, variant);
+    //         // }
+    //         // // if (divisor == std::sqrt(currentNumber)) {
+    //         // //     lock_guard<mutex> lock(this->printMutex);
+    //         // //     printer->printPrimes(currentNumber, numThreads, variant);
+    //         // // }
+
+    //         printer->logPrime(currentNumber, threadID, variant);
+    //     }
+
+    //     if (isPrime(currentNumber) && currentNumber != 1) {
+    //         lock_guard<mutex> lock(this->searchMutex);
+    //         colors.red();
+    //         cout << "Current number: " << currentNumber << " is prime" << endl;
+    //         colors.reset();
+    //     }
+
+    //     cout << endl;
+    // }
 
     threadState->store(false);
 }

@@ -105,10 +105,23 @@ void VariationManager::executeVariant3()
 
     for (int i = start; i <= this->targetNumber; i++) {
 
-        lock_guard<mutex> lock(this->variationMutex);
-        color.red();
-        cout << "Checking: " << i << endl;
-        color.reset();
+        {
+            lock_guard<mutex> lock(this->variationMutex);
+            color.red();
+            cout << "Checking: " << i << endl;
+            color.reset();
+        }
+
+        if (i == 1) {
+            printer->logPrime(i, 0, 'L');
+        }
+
+
+        for (int t = 0; t < this->numThreads; t++) {
+            threads.emplace_back(t, std::thread(&ASearch::searchPrimes, searchMethod, i, i, t, std::ref(this->printer), threadStates[t], 'L'));
+        }
+
+        this->joinAllThreads();
 
         // do {
         //     divisor = primes[primeIndex];
@@ -133,16 +146,16 @@ void VariationManager::executeVariant3()
         //     primeIndex = 0;
         // }
 
-        for (int t = 0; t < this->numThreads; t++) {
-            threads.emplace_back(t, std::thread(&ASearch::searchPrimes, searchMethod, i, i, this->numThreads, std::ref(this->printer), threadStates[t], 'L'));
-        }
+        // for (int t = 0; t < this->numThreads; t++) {
+        //     threads.emplace_back(t, std::thread(&ASearch::searchPrimes, searchMethod, i, i, this->numThreads, std::ref(this->printer), threadStates[t], 'L'));
+        // }
 
-        lock_guard<mutex> lock2(this->variationMutex);
-        color.red();
-        cout << "Done Checking: " << i << endl;
-        color.reset();
+        // lock_guard<mutex> lock2(this->variationMutex);
+        // color.red();
+        // cout << "Done Checking: " << i << endl;
+        // color.reset();
 
-        this->joinAllThreads();
+        // this->joinAllThreads();
     }
 
     this->joinAllThreads();

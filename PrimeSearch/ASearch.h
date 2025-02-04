@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <mutex>
+#include <atomic>
 
 #include "../TypeDefRepo.h"
 #include "../Print/APrint.h"
@@ -9,7 +10,8 @@ class ASearch
 {
 public:
     virtual ~ASearch() = default;
-    virtual void searchPrimes(int start, int end, int threadId, APrint* printer, char variant) = 0;
+    // virtual void searchPrimes(int start, int end, int threadId, APrint* printer, char variant, std::atomic<bool>& isPrimeFlag) = 0;
+    virtual void searchPrimes(int start, int end, int threadId, APrint* printer, char variant, std::atomic<bool>& isPrimeFlag) = 0;
 
 protected:
     static std::mutex searchMutex;

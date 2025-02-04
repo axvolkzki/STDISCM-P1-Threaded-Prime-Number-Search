@@ -4,32 +4,32 @@
 
 #include "../Config/GlobalConfig.h"
 
-void SearchLinear::searchPrimes(int start, int end, int threadID, APrint *printer, char variant)
+void SearchLinear::searchPrimes(int start, int end, int threadID, APrint *printer, char variant, std::atomic<bool> &isPrimeFlag)
 {
     int numThreads = GlobalConfig::getInstance()->getNumberOfThreads();
 
     for (int divisor = threadID + 2; divisor < start; divisor += numThreads) {
+        if (!isPrimeFlag) {
+            return; // stop immediately the thread if the number is not a prime number
+        }
+
         {
             lock_guard<mutex> lock(this->searchMutex);
             printer->logPrime(divisor, threadID, variant);
         }
 
-        if (start % divisor == 0) {
+        if (!this->isPrime(start, divisor)) {
+            isPrimeFlag = false;
             return;
         }
     }
 
 }
 
-bool SearchLinear::isPrime(int number)
+bool SearchLinear::isPrime(int dividend, int divisor)
 {
-    if (number <= 1) return false;          // 1 and below are not primes
-    if (number == 2) return true;           // 2 is the only even prime
-    if (number % 2 == 0) return false;      // Other even numbers are not primes
-
-    // Check divisibility up to the square root of the number
-    for (int i = 3; i <= std::sqrt(number); i += 2) {
-        if (number % i == 0) return false;
+    if (dividend % divisor == 0) {
+        return false;
     }
 
     return true;

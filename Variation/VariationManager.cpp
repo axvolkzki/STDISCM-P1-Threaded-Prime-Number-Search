@@ -31,6 +31,7 @@ void VariationManager::executeVariation()
 
 void VariationManager::executeVariant1()
 {
+    std::atomic<bool> dummyFlag = true; // Unused, but needed for function signature
     int range = this->targetNumber / this->numThreads;
     int start = 0;
     int end = range;
@@ -40,7 +41,7 @@ void VariationManager::executeVariant1()
             end = this->targetNumber;
         }
 
-        this->threads.emplace_back(t, std::thread(&ASearch::searchPrimes, searchMethod, start, end, t, std::ref(this->printer), 'R'));
+        this->threads.emplace_back(t, std::thread(&ASearch::searchPrimes, searchMethod, start, end, t, std::ref(this->printer), 'R', std::ref(dummyFlag)));
 
         start = end + 1;
         end = start + range - 1;
@@ -51,6 +52,7 @@ void VariationManager::executeVariant1()
 
 void VariationManager::executeVariant2()
 {
+    std::atomic<bool> dummyFlag = true; // Unused, but needed for function signature
     int range = this->targetNumber / this->numThreads;
     int start = 0;
     int end = range;
@@ -60,7 +62,7 @@ void VariationManager::executeVariant2()
             end = this->targetNumber;
         }
 
-        this->threads.emplace_back(t, std::thread(&ASearch::searchPrimes, searchMethod, start, end, t, std::ref(this->printer), 'R'));
+        this->threads.emplace_back(t, std::thread(&ASearch::searchPrimes, searchMethod, start, end, t, std::ref(this->printer), 'R', std::ref(dummyFlag)));
 
         start = end + 1;
         end = start + range - 1;
@@ -74,6 +76,7 @@ void VariationManager::executeVariant2()
 void VariationManager::executeVariant3()
 {
     std::vector<bool> isPrime(this->targetNumber + 1, false);
+    std::atomic<bool> isPrimeFlag = true;
 
     for (int i = 1; i <= this->targetNumber; i++) {
 
@@ -84,23 +87,26 @@ void VariationManager::executeVariant3()
             color.reset();
         }
 
-        if (i == 1) {
-            printer->logPrime(i, 0, 'L');
-        }
-
-
         for (int t = 0; t < this->numThreads; t++) {
-            threads.emplace_back(t, std::thread(&ASearch::searchPrimes, searchMethod, i, i, t, std::ref(this->printer), 'L'));
+            threads.emplace_back(t, std::thread(&ASearch::searchPrimes, searchMethod, i, i, t, std::ref(this->printer), 'L', std::ref(isPrimeFlag)));
         }
 
         this->joinAllThreads();
 
-        if (i == 1) {
+        if (!isPrimeFlag || i == 1) {
             color.red();
             cout << "Result: " << i << " is not a prime number" << endl;
             color.reset();
         }
 
+        if (isPrimeFlag && i != 1) {
+            color.green();
+            cout << "Result: " << i << " is a prime number" << endl;
+            color.reset();
+        }
+
+        // reset the flag
+        isPrimeFlag = true;
     }
 
     this->joinAllThreads();

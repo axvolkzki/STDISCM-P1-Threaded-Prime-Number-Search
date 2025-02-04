@@ -35,4 +35,7 @@ private:
     void executeVariant4();
 
     void joinAllThreads();
+
+    void displayStartTime();
+    void displayEndTime();
 };

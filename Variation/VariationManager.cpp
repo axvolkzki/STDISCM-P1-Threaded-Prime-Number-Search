@@ -7,9 +7,7 @@
 
 void VariationManager::executeVariation()
 {
-    color.red();
-    cout << "Start Time: " << GlobalConfig::getInstance()->getTimestamp() << endl;
-    color.reset();
+    this->displayStartTime();
 
     switch (this->variant) {
         case 1:
@@ -26,11 +24,9 @@ void VariationManager::executeVariation()
             break;
     }
 
-    color.red();
-    cout << "End Time: " << GlobalConfig::getInstance()->getTimestamp() << "\n" << endl;
-    color.reset();
-
     this->joinAllThreads();
+
+    this->displayEndTime();
 }
 
 void VariationManager::executeVariant1()
@@ -83,8 +79,8 @@ void VariationManager::executeVariant3()
 
         {
             lock_guard<mutex> lock(this->variationMutex);
-            color.red();
-            cout << "Checking: " << i << endl;
+            color.yellow();
+            cout << "\nChecking: " << i << endl;
             color.reset();
         }
 
@@ -98,6 +94,12 @@ void VariationManager::executeVariant3()
         }
 
         this->joinAllThreads();
+
+        if (i == 1) {
+            color.red();
+            cout << "Result: " << i << " is not a prime number" << endl;
+            color.reset();
+        }
 
     }
 
@@ -115,4 +117,18 @@ void VariationManager::joinAllThreads()
             thread.second.join();
         }
     }
+}
+
+void VariationManager::displayStartTime()
+{
+    color.blue();
+    cout << "Start Time: " << GlobalConfig::getInstance()->getTimestamp() << endl;
+    color.reset();
+}
+
+void VariationManager::displayEndTime()
+{
+    color.blue();
+    cout << "End Time: " << GlobalConfig::getInstance()->getTimestamp() << "\n" << endl;
+    color.reset();
 }

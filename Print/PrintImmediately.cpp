@@ -8,7 +8,6 @@
 using namespace chrono;
 
 
-
 void PrintImmediately::logPrime(int prime, int threadId, char variant) {
     printPrimes(prime, threadId, variant);
 }

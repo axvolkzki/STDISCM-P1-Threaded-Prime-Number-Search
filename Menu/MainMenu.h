@@ -2,7 +2,9 @@
 #include <iostream>
 
 #include "../TypeDefRepo.h"
-#include "MainMenu.h"
+#include "../Config/GlobalConfig.h"
+#include "../PrimeSearch/ASearch.h"
+#include "../Print/APrint.h"
 
 class MainMenu
 {
@@ -12,7 +14,7 @@ public:
     static void initialize();
     static void destroy();
 
-    void startApp();
+    void start();
     bool isRunning() const;
 
 private:
@@ -20,13 +22,16 @@ private:
     static MainMenu* sharedInstance;
 
     bool running = true;
+    int variant = 0;
+
+    ASearch* searchMethod = nullptr;
+    APrint* printer = nullptr;
 
     void showMenu() const;
+    void displayCurrentConfig() const;
 
     int validateInput();
     bool isValidInput(String& input) const;
-    
-    void processInput() const;
-    
-    void exitApp();
+
+    void exit();
 };

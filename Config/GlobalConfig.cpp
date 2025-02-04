@@ -1,5 +1,7 @@
 #include "GlobalConfig.h"
 
+#include <chrono>
+
 
 GlobalConfig* GlobalConfig::sharedInstance = nullptr;
 
@@ -73,6 +75,17 @@ int GlobalConfig::getTargetNumber() const {
     return this->configData.targetNumber;
 }
 
+String GlobalConfig::getTimestamp() const
+{
+    auto now = chrono::system_clock::now();
+    time_t currentTime = chrono::system_clock::to_time_t(now);
+    tm localTime;
+    localtime_s(&localTime, &currentTime);
+
+    stringstream time;
+    time << put_time(&localTime, "%I:%M:%S %p");
+    return time.str();
+}
 
 bool GlobalConfig::parseConfigFile(String& line) {
 	bool isParsed = false;

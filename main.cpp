@@ -8,11 +8,10 @@ int main() {
 
     String configPath = "config.txt";												// Set the path to the configuration file
 	GlobalConfig::getInstance()->loadConfigFile(configPath);                        // Load the configuration file
-    GlobalConfig::getInstance()->printConfig();										// Print the configuration
     
     bool running = true;
     while (running) {
-        MainMenu::getInstance()->startApp();										// Start the application
+        MainMenu::getInstance()->start();										// Start the application
     
         running = MainMenu::getInstance()->isRunning();								// Check if the application is running
     }

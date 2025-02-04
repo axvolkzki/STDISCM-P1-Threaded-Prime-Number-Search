@@ -17,10 +17,10 @@ void PrintAtTheEnd::logPrime(int prime, int threadId, char variant) {
 void PrintAtTheEnd::printPrimes(int prime, int threadId, char variant)
 {
     lock_guard<mutex> lock(printMutex);
-    for (auto& prime : primes) {
-        cout << "[Thread " << std::get<0>(prime) << "] Prime found: " << std::get<1>(prime)
-         << " at " << GlobalConfig::getInstance()->getTimestamp() << endl;
-    }
+    // for (auto& prime : primes) {
+    //     cout << "[Thread " << std::get<0>(prime) << "] Prime found: " << std::get<1>(prime)
+    //      << " at " << GlobalConfig::getInstance()->getTimestamp() << endl;
+    // }
 
     for (auto& prime : primes) {
         switch (variant) {

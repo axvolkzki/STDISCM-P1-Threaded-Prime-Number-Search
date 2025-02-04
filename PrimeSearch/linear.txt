@@ -1,0 +1,86 @@
+#include <iostream>
+#include <thread>
+#include <vector>
+#include <mutex>
+#include <cmath>
+
+std::mutex mtx; // Mutex for synchronizing output
+
+// Function to check if a number is prime
+bool isPrime(int num) {
+    if (num <= 1) return false; // 1 and below are not primes
+    if (num == 2) return true;  // 2 is the only even prime
+    if (num % 2 == 0) return false; // Other even numbers are not primes
+
+    // Check divisibility up to the square root of the number
+    for (int i = 3; i <= std::sqrt(num); i += 2) {
+        if (num % i == 0) return false;
+    }
+    return true;
+}
+
+// Function for each thread to process a subset of numbers
+void checkPrimes(int threadId, int start, int end, int step, const std::vector<int>& numbers, std::vector<bool>& isPrimeResult) {
+    for (int i = start; i < end; i += step) {
+        int currentNum = numbers[i];
+        bool isCurrentNumPrime = true;
+
+        std::lock_guard<std::mutex> lock(mtx); // Lock to ensure thread-safe output
+        std::cout << "Current Number: " << currentNum << std::endl;
+
+        // Check divisibility for the current number
+        for (int divisor = 2; divisor <= std::sqrt(currentNum); ++divisor) {
+            if (currentNum % divisor == 0) {
+                isCurrentNumPrime = false;
+                std::cout << "T" << threadId << " - Checking for divisibility: " << divisor << " (divisible)" << std::endl;
+                break; // Not a prime, no need to check further
+            } else {
+                std::cout << "T" << threadId << " - Checking for divisibility: " << divisor << " (not divisible)" << std::endl;
+            }
+        }
+
+        if (isCurrentNumPrime && currentNum > 1) {
+            isPrimeResult[i] = true;
+            std::cout << "Current Number: " << currentNum << " is a prime." << std::endl;
+        } else {
+            std::cout << "Current Number: " << currentNum << " is not a prime." << std::endl;
+        }
+        std::cout << std::endl;
+    }
+}
+
+int main() {
+    int targetNum = 20;
+    int numThreads = 4;
+
+    // Generate numbers from 1 to targetNum
+    std::vector<int> numbers(targetNum);
+    for (int i = 0; i < targetNum; ++i) {
+        numbers[i] = i + 1;
+    }
+
+    // Vector to store whether each number is prime
+    std::vector<bool> isPrimeResult(targetNum, false);
+
+    // Create threads
+    std::vector<std::thread> threads;
+    for (int i = 0; i < numThreads; ++i) {
+        threads.emplace_back(checkPrimes, i, i, targetNum, numThreads, std::ref(numbers), std::ref(isPrimeResult));
+    }
+
+    // Join threads
+    for (auto& t : threads) {
+        t.join();
+    }
+
+    // Output the results
+    std::cout << "\nPrime numbers between 1 and " << targetNum << " are: ";
+    for (int i = 0; i < targetNum; ++i) {
+        if (isPrimeResult[i]) {
+            std::cout << numbers[i] << " ";
+        }
+    }
+    std::cout << std::endl;
+
+    return 0;
+}

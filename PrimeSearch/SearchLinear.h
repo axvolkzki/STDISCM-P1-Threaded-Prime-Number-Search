@@ -18,5 +18,5 @@ public:
     
 private:
     Colors colors;
-    bool isPrime(int dividend, int divisor);
+    bool isPrime(int number);
 };

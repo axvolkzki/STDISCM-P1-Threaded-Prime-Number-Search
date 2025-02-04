@@ -90,7 +90,7 @@ void VariationManager::executeVariant2()
 
 void VariationManager::executeVariant3()
 {
-    int start = 3;
+    int start = 1;
     int threadID = 0;
     int primeIndex = 0;
     int divisor = 0;
@@ -110,27 +110,31 @@ void VariationManager::executeVariant3()
         cout << "Checking: " << i << endl;
         color.reset();
 
-        do {
-            divisor = primes[primeIndex];
+        // do {
+        //     divisor = primes[primeIndex];
 
 
-            if (threadID == this->numThreads) {
-                threadID = 0;
-            }
+        //     if (threadID == this->numThreads) {
+        //         threadID = 0;
+        //     }
 
-            // check if thread is available
-            if (threadStates[threadID]->load() == false) {
-                this->threads.emplace_back(threadID, std::thread(&ASearch::searchPrimes, searchMethod, i, divisor, threadID, std::ref(this->printer), threadStates[threadID], 'L'));
-                threadID++;
-                break;
-            }
+        //     // check if thread is available
+        //     if (threadStates[threadID]->load() == false) {
+        //         this->threads.emplace_back(threadID, std::thread(&ASearch::searchPrimes, searchMethod, i, divisor, threadID, std::ref(this->printer), threadStates[threadID], 'L'));
+        //         threadID++;
+        //         break;
+        //     }
             
-            primeIndex++;
-        } while (primeIndex != primes.size() - 1);
+        //     primeIndex++;
+        // } while (primeIndex != primes.size() - 1);
 
-        if (primeIndex == primes.size() - 1) {
-            primes.push_back(i);
-            primeIndex = 0;
+        // if (primeIndex == primes.size() - 1) {
+        //     primes.push_back(i);
+        //     primeIndex = 0;
+        // }
+
+        for (int t = 0; t < this->numThreads; t++) {
+            threads.emplace_back(t, std::thread(&ASearch::searchPrimes, searchMethod, i, i, this->numThreads, std::ref(this->printer), threadStates[t], 'L'));
         }
 
         lock_guard<mutex> lock2(this->variationMutex);

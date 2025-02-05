@@ -97,11 +97,13 @@ void MainMenu::showMenu() const
 
 void MainMenu::displayCurrentConfig() const
 {
-    cout << "Current configuration:" << endl;
+    color.yellow();
+    cout << "Current configuration" << endl;
     cout << "Number of threads  : " << GlobalConfig::getInstance()->getNumberOfThreads() << endl;
     cout << "Target number      : " << GlobalConfig::getInstance()->getTargetNumber() << endl;
     cout << "Variant            : " << this->variant << endl;
     cout << endl;
+    color.reset();
 }
 
 

@@ -1,23 +1,48 @@
 #include "TypeDefRepo.h"
 #include "Config/GlobalConfig.h"
 #include "Menu/MainMenu.h"
+#include "Helper/Colors.h"
 
 int main() {
+    Colors colors;
+    bool running = true;
+    
+
     GlobalConfig::initialize();														// Initialize the instance of GlobalConfig
 	MainMenu::initialize();															// Initialize the instance of MainMenu
 
     String configPath = "config.txt";												// Set the path to the configuration file
-	GlobalConfig::getInstance()->loadConfigFile(configPath);                        // Load the configuration file
-    
-    bool running = true;
-    while (running) {
-        MainMenu::getInstance()->start();										// Start the application
-    
-        running = MainMenu::getInstance()->isRunning();								// Check if the application is running
+	
+    // if (!GlobalConfig::getInstance()->loadConfigFile(configPath)) {					// Load the configuration file
+    //     colors.red();
+    //     cerr << "Error: Could not load configuration file." << endl;
+    //     cerr << "Please check the file path and its contents then try again." << endl;
+    //     cerr << "Exiting..." << endl;
+    //     colors.reset();
+    //     return 1;
+    // } else {
+    //     system("cls");
+
+    //     while (running) {
+    //         MainMenu::getInstance()->start();										// Start the application
+    //         running = MainMenu::getInstance()->isRunning();							// Check if the application is running
+    //     }
+    // }
+
+    if (!GlobalConfig::getInstance()->loadConfigFile(configPath)) {					// Load the configuration file
+        GlobalConfig::getInstance()->printErrorConfigFile();						// Print an error message if the configuration file is not loaded
+        running = false;
+        return 1;
     }
 
-    MainMenu::destroy();																// Destroy the instance of MainMenu
-    GlobalConfig::destroy();															// Destroy the instance of GlobalConfig
+    while (running) {
+        MainMenu::getInstance()->start();										// Start the application
+        running = MainMenu::getInstance()->isRunning();							// Check if the application is running
+    }
+    
+
+    MainMenu::destroy();															// Destroy the instance of MainMenu
+    GlobalConfig::destroy();														// Destroy the instance of GlobalConfig
 
     return 0;
 }

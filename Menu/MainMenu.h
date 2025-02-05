@@ -2,6 +2,7 @@
 #include <iostream>
 
 #include "../TypeDefRepo.h"
+#include "../Helper/Colors.h"
 #include "../Config/GlobalConfig.h"
 #include "../PrimeSearch/ASearch.h"
 #include "../Print/APrint.h"
@@ -20,7 +21,8 @@ public:
 private:
     MainMenu();
     static MainMenu* sharedInstance;
-
+    Colors color;
+    
     bool running = true;
     int variant = 0;
 

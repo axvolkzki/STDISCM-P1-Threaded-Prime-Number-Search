@@ -1,10 +1,7 @@
 #pragma once
-#include <iostream>
-#include <fstream>
-#include <sstream>
-#include <iomanip>
 
 #include "../TypedefRepo.h"
+#include "../Helper/Colors.h"
 
 class GlobalConfig
 {
@@ -13,9 +10,9 @@ public:
 
     static void initialize();
     static void destroy();
-
-    void loadConfigFile(String& filename);				// Loads the config file
-	void printConfig() const;							// Prints the config
+					
+    bool loadConfigFile(String& filename);				// Loads the config file
+    void printErrorConfigFile();						// Prints an error message if the config file is not loaded
 
     int getNumberOfThreads() const;
     int getTargetNumber() const;
@@ -32,5 +29,10 @@ private:
     };
 
     ConfigData configData;								// Config variable
-	bool parseConfigFile(String& line);					// Parses the config file
+    Colors color;										// Color variable
+    
+    bool validateThreadCount(int threadCount);			// Validates the thread count
+    bool validateTargetNumber(int targetNumber);			// Validates the target number
+    
+    bool parseConfigFile(String& line);					// Parses the config file
 };

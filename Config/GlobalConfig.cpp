@@ -76,16 +76,14 @@ bool GlobalConfig::loadConfigFile(String &filename)
         } else {
             if (!validateThreadCount(this->configData.numberOfThreads)) {
                 return isLoaded;
-            } else {
-                isLoaded = true;
             }
         }
 
         if (!(file >> keyTarget >> this->configData.targetNumber) || keyTarget != "y") {
-            isLoaded = false;
+            return isLoaded;
         } else {
             if (!validateTargetNumber(this->configData.targetNumber)) {
-                isLoaded = false;
+                return isLoaded;
             } else {
                 isLoaded = true;
             }

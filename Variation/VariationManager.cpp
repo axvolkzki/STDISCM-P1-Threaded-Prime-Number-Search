@@ -70,6 +70,10 @@ void VariationManager::executeVariant2()
 
     this->joinAllThreads();
 
+    color.green();
+    cout << "Printing all primes..." << endl;
+    color.reset();
+    
     this->printer->printPrimes(0, 0, 'R');
 }
 

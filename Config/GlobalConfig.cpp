@@ -5,6 +5,7 @@
 #include <sstream>
 #include <iomanip>
 #include <chrono>
+#include <ctime>
 
 
 GlobalConfig* GlobalConfig::sharedInstance = nullptr;
@@ -125,13 +126,26 @@ int GlobalConfig::getTargetNumber() const {
 
 String GlobalConfig::getTimestamp() const
 {
+    // auto now = chrono::system_clock::now();
+    // time_t currentTime = chrono::system_clock::to_time_t(now);
+    // tm localTime;
+    // localtime_s(&localTime, &currentTime);
+
+    // stringstream time;
+    // time << put_time(&localTime, "%I:%M:%S %p");
+    // return time.str();
+
     auto now = chrono::system_clock::now();
+    auto ms = chrono::duration_cast<chrono::milliseconds>(now.time_since_epoch()) % 1000;
+
     time_t currentTime = chrono::system_clock::to_time_t(now);
+
     tm localTime;
     localtime_s(&localTime, &currentTime);
 
     stringstream time;
-    time << put_time(&localTime, "%I:%M:%S %p");
+    time << put_time(&localTime, "%I:%M:%S") << '.' << setfill('0') << setw(3) << ms.count();
+
     return time.str();
 }
 

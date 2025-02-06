@@ -9,8 +9,8 @@ This program demonstrates essential threading concepts by creating a configurabl
 4. Search for prime numbers linearly and print them at the end. **[A2B2]**
 
 ## Video Demonstration of the Four Variants
-The demonstration of each variants are accessible in the following:
-- Google Drive:
+The demonstration of all variants are accessible in the following:
+- Google Drive: 
 - YouTube Link:
 
 ## Four Variants in the Directory
@@ -44,3 +44,4 @@ The combination of these print modes and task division methods results to four v
 
 ## Developer
 ABENOJA, Amelia Joyce L.     STDISCM - S14
+

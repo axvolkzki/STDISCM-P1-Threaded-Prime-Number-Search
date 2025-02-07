@@ -15,6 +15,6 @@ void PrintImmediately::logPrime(int prime, int threadId) {
 void PrintImmediately::printPrimes(int prime, int threadId)
 {
     lock_guard<mutex> lock(printMutex);
-    cout << GlobalConfig::getInstance()->getTimestamp() << " [Thread " << threadId << "] Prime Found: " << prime << endl;
+    cout << GlobalConfig::getInstance()->getTimestamp() << "\t" << "[Thread " << threadId << "]" << "\t" << "Prime Found: " << prime << endl;
     this_thread::sleep_for(milliseconds(100));  // Delay to simulate processing time
 }

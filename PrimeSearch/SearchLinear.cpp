@@ -9,16 +9,16 @@ void SearchLinear::searchPrimes(int start, int end, int threadID, APrint *printe
     int numThreads = GlobalConfig::getInstance()->getNumberOfThreads();
 
     for (int divisor = threadID + 2; divisor < start; divisor += numThreads) {
-        if (!isPrimeFlag) {
-            return; // stop immediately the thread if the number is not a prime number
-        }
+        // if (!isPrimeFlag) {
+        //     return; // stop immediately the thread if the number is not a prime number
+        // }
 
-        {
-            lock_guard<mutex> lock(this->searchMutex);
-            printer->logPrime(divisor, threadID);
-        }
+        // {
+        //     lock_guard<mutex> lock(this->searchMutex);
+        //     printer->logPrime(divisor, threadID);
+        // }
 
-        if (!this->isPrime(start, divisor)) {
+        if (!this->isPrime(start, divisor)) {       // Check if the number is prime, if not, set the flag to false
             isPrimeFlag = false;
             return;
         }

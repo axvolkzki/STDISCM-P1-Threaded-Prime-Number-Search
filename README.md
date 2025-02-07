@@ -10,8 +10,10 @@ This program demonstrates essential threading concepts by creating a configurabl
 
 ## Video Demonstration of the Four Variants
 The demonstration of all variants are accessible in the following:
-- Google Drive: 
-- YouTube Link:
+- Variant 1 **[A1B1]** : [![Variant 1](https://raw.githubusercontent.com/axvolkzki/repository/)]
+- Variant 2 **[A2B1]** :
+- Variant 3 **[A1B2]** :
+- Variant 4 **[A2B2]** :
 
 ## Four Variants in the Directory
 - Print Modes:

@@ -11,7 +11,7 @@
 class VariationManager
 {
 public:
-    VariationManager(int targetNumber, int numThreads, ASearch* searchMethod, APrint* printer, int variant) :
+    VariationManager(unsigned long int targetNumber, unsigned int numThreads, ASearch* searchMethod, APrint* printer, int variant) :
         targetNumber(targetNumber), numThreads(numThreads), searchMethod(searchMethod), printer(printer), variant(variant)
     {
     }
@@ -19,13 +19,13 @@ public:
     void executeVariation();
 
 private:
-    int numThreads;
-    int targetNumber;
+    unsigned int numThreads;
+    unsigned long int targetNumber;
     ASearch* searchMethod;
     APrint* printer;
     int variant;
 
-    vector<pair<int, std::thread>> threads;
+    vector<pair<unsigned int, std::thread>> threads;
     Colors color;
     std::mutex variationMutex;
 

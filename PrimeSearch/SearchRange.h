@@ -10,7 +10,7 @@ class SearchRange : public ASearch
 public:
     SearchRange() = default;
     
-    void searchPrimes(int start, int end, int threadId, APrint* printer, std::atomic<bool>& isPrimeFlag) override;
+    void searchPrimes(unsigned long int start, unsigned long int end, unsigned int threadId, APrint* printer, std::atomic<bool>& isPrimeFlag) override;
 private:
-    bool isPrime(int number);
+    bool isPrime(unsigned long int number);
 };

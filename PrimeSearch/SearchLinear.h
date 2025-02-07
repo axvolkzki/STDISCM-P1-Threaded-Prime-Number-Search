@@ -14,9 +14,9 @@ class SearchLinear : public ASearch
 {
 public:
     SearchLinear() = default;
-    void searchPrimes(int start, int end, int threadID, APrint* printer, std::atomic<bool>& isPrimeFlag) override;
+    void searchPrimes(unsigned long int start, unsigned long int end, unsigned int threadID, APrint* printer, std::atomic<bool>& isPrimeFlag) override;
     
 private:
     Colors colors;
-    bool isPrime(int dividend, int divisor);
+    bool isPrime(unsigned int dividend, unsigned int divisor);
 };

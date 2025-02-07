@@ -10,7 +10,7 @@ class ASearch
 {
 public:
     virtual ~ASearch() = default;
-    virtual void searchPrimes(int start, int end, int threadId, APrint* printer, std::atomic<bool>& isPrimeFlag) = 0;
+    virtual void searchPrimes(unsigned long int start, unsigned long int end, unsigned int threadId, APrint* printer, std::atomic<bool>& isPrimeFlag) = 0;
 
 protected:
     static std::mutex searchMutex;

@@ -14,8 +14,8 @@ public:
     bool loadConfigFile(String& filename);				// Loads the config file
     void printErrorConfigFile();						// Prints an error message if the config file is not loaded
 
-    int getNumberOfThreads() const;
-    int getTargetNumber() const;
+    unsigned int getNumberOfThreads() const;
+    unsigned long int getTargetNumber() const;
     String getTimestamp() const;
 
 private:
@@ -24,13 +24,13 @@ private:
 
     struct ConfigData
     {
-        int numberOfThreads;
-        int targetNumber;
+        unsigned int numberOfThreads;                   // aim to be less than the target number for PC performance reasons; from 1 to 2^32-1
+        unsigned long int targetNumber;                 // to support large numbers from 0 to 2^64-1
     };
 
     ConfigData configData;								// Config variable
     Colors color;										// Color variable
     
-    bool validateThreadCount(int threadCount);			// Validates the thread count
-    bool validateTargetNumber(int targetNumber);			// Validates the target number
+    bool validateThreadCount(unsigned int threadCount);			// Validates the thread count
+    bool validateTargetNumber(unsigned long int targetNumber);			// Validates the target number
 };

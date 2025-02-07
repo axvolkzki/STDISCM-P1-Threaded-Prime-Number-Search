@@ -92,11 +92,11 @@ void GlobalConfig::printErrorConfigFile()
     color.reset();
 }
 
-int GlobalConfig::getNumberOfThreads() const {
+unsigned int GlobalConfig::getNumberOfThreads() const {
     return this->configData.numberOfThreads;
 }
 
-int GlobalConfig::getTargetNumber() const {
+unsigned long int GlobalConfig::getTargetNumber() const {
     return this->configData.targetNumber;
 }
 
@@ -133,10 +133,10 @@ String GlobalConfig::getTimestamp() const
     return time.str();
 }
 
-bool GlobalConfig::validateThreadCount(int threadCount) {
+bool GlobalConfig::validateThreadCount(unsigned int threadCount) {
     return threadCount > 0;
 }
 
-bool GlobalConfig::validateTargetNumber(int targetNumber) {
+bool GlobalConfig::validateTargetNumber(unsigned long int targetNumber) {
     return targetNumber > 0;
 }

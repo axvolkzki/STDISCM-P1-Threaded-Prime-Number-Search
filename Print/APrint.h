@@ -8,7 +8,7 @@ class APrint
 {
 public:
     virtual ~APrint() = default;
-    virtual void logPrime(int prime, int threadId) = 0;
-    virtual void printPrimes(int prime, int threadId) = 0;
+    virtual void logPrime(unsigned long int prime, unsigned int threadId) = 0;
+    virtual void printPrimes(unsigned long int prime, unsigned int threadId) = 0;
 };
 

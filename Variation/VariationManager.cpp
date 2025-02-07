@@ -28,15 +28,15 @@ void VariationManager::executeVariation()
 void VariationManager::executeVariant1()
 {
     std::atomic<bool> dummyFlag = true; // Unused, but needed for function signature
-    int range = this->targetNumber / this->numThreads;
-    int start = 0;
-    int end = range;
+    unsigned long int range = this->targetNumber / this->numThreads;
+    unsigned long int start = 0;
+    unsigned long int end = range;
 
     color.green();
     cout << "All Prime Numbers: " << endl;
     color.reset();
 
-    for (int t = 0; t < this->numThreads; t++) {
+    for (unsigned int t = 0; t < this->numThreads; t++) {
         if (t == this->numThreads - 1) {
             end = this->targetNumber;
         }
@@ -58,14 +58,14 @@ void VariationManager::executeVariant1()
 void VariationManager::executeVariant2()
 {
     std::atomic<bool> dummyFlag = true; // Unused, but needed for function signature
-    int range = this->targetNumber / this->numThreads;
-    int start = 0;
-    int end = range;
+    unsigned long int range = this->targetNumber / this->numThreads;
+    unsigned long int start = 0;
+    unsigned long int end = range;
 
     this->displayStartTime();   // Display start time
     cout << endl;
 
-    for (int t = 0; t < this->numThreads; t++) {
+    for (unsigned int t = 0; t < this->numThreads; t++) {
         if (t == this->numThreads - 1) {
             end = this->targetNumber;
         }
@@ -100,7 +100,7 @@ void VariationManager::executeVariant3()
     cout << "All Prime Numbers: " << endl;
     color.reset();
 
-    for (int i = 2; i <= this->targetNumber; i++) {
+    for (unsigned long int i = 2; i <= this->targetNumber; i++) {
 
         isPrimeFlag = true;
 
@@ -109,7 +109,7 @@ void VariationManager::executeVariant3()
             continue;
         }
 
-        for (int t = 0; t < this->numThreads; t++) {
+        for (unsigned int t = 0; t < this->numThreads; t++) {
             threads.emplace_back(t, std::thread(&ASearch::searchPrimes, searchMethod, i, i, t, std::ref(this->printer), std::ref(isPrimeFlag)));
         }
 
@@ -126,12 +126,11 @@ void VariationManager::executeVariant3()
 
 void VariationManager::executeVariant4()
 {
-    std::vector<int> allPrimes;
     std::atomic<bool> isPrimeFlag = true;
 
     this->displayStartTime();   // Display start time
 
-    for (int i = 2; i <= this->targetNumber; i++) {
+    for (unsigned long int i = 2; i <= this->targetNumber; i++) {
         
         isPrimeFlag = true;
 
@@ -140,7 +139,7 @@ void VariationManager::executeVariant4()
             continue;
         }
 
-        for (int t = 0; t < this->numThreads; t++) {
+        for (unsigned int t = 0; t < this->numThreads; t++) {
             threads.emplace_back(t, std::thread(&ASearch::searchPrimes, searchMethod, i, i, t, std::ref(this->printer), std::ref(isPrimeFlag)));
         }
 

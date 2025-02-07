@@ -9,8 +9,8 @@ class PrintImmediately : public APrint
 public:
     PrintImmediately() = default;
 
-    void logPrime(int prime, int threadId) override;
-    void printPrimes(int prime, int threadId) override;
+    void logPrime(unsigned long int prime, unsigned int threadId) override;
+    void printPrimes(unsigned long int prime, unsigned int threadId) override;
 
 private:
     std::mutex printMutex;

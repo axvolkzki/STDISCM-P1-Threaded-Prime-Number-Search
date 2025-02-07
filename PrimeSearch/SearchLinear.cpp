@@ -4,12 +4,12 @@
 
 #include "../Config/GlobalConfig.h"
 
-void SearchLinear::searchPrimes(int start, int end, int threadID, APrint *printer, std::atomic<bool> &isPrimeFlag)
+void SearchLinear::searchPrimes(unsigned long int start, unsigned long int end, unsigned int threadID, APrint *printer, std::atomic<bool> &isPrimeFlag)
 {
-    int numThreads = GlobalConfig::getInstance()->getNumberOfThreads();
+    unsigned int numThreads = GlobalConfig::getInstance()->getNumberOfThreads();
     bool isLastThread = false; 
 
-    for (int divisor = threadID + 2; divisor < start; divisor += numThreads) {
+    for (unsigned int divisor = threadID + 2; divisor < start; divisor += numThreads) {
         if (!isPrimeFlag) {
             return; // stop immediately the thread if the number is not a prime number
         }
@@ -30,7 +30,7 @@ void SearchLinear::searchPrimes(int start, int end, int threadID, APrint *printe
 
 }
 
-bool SearchLinear::isPrime(int dividend, int divisor)
+bool SearchLinear::isPrime(unsigned int dividend, unsigned int divisor)
 {   
     if (dividend % divisor == 0) {
         return false;

@@ -8,11 +8,11 @@
 using namespace chrono;
 
 
-void PrintImmediately::logPrime(int prime, int threadId) {
+void PrintImmediately::logPrime(unsigned long int prime, unsigned int threadId) {
     printPrimes(prime, threadId);
 }
 
-void PrintImmediately::printPrimes(int prime, int threadId)
+void PrintImmediately::printPrimes(unsigned long int prime, unsigned int threadId)
 {
     lock_guard<mutex> lock(printMutex);
     cout << GlobalConfig::getInstance()->getTimestamp() << "\t" << "[Thread " << threadId << "]" << "\t" << "Prime Found: " << prime << endl;

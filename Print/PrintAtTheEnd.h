@@ -12,11 +12,11 @@ class PrintAtTheEnd : public APrint
 {
 public:
     PrintAtTheEnd() = default;
-    void logPrime(int prime, int threadId) override;
+    void logPrime(unsigned long int prime, unsigned int threadId) override;
 
-    void printPrimes(int prime, int threadId) override;
+    void printPrimes(unsigned long int prime, unsigned int threadId) override;
 
 private:
     std::mutex printMutex;
-    std::vector<int> allPrimes;
+    std::vector<unsigned long int> allPrimes;
 };

@@ -4,7 +4,7 @@
 
 #include "../Config/GlobalConfig.h"
 
-void SearchLinear::searchPrimes(int start, int end, int threadID, APrint *printer, char variant, std::atomic<bool> &isPrimeFlag)
+void SearchLinear::searchPrimes(int start, int end, int threadID, APrint *printer, std::atomic<bool> &isPrimeFlag)
 {
     int numThreads = GlobalConfig::getInstance()->getNumberOfThreads();
 
@@ -15,7 +15,7 @@ void SearchLinear::searchPrimes(int start, int end, int threadID, APrint *printe
 
         {
             lock_guard<mutex> lock(this->searchMutex);
-            printer->logPrime(divisor, threadID, variant);
+            printer->logPrime(divisor, threadID);
         }
 
         if (!this->isPrime(start, divisor)) {

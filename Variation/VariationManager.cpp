@@ -7,8 +7,6 @@
 
 void VariationManager::executeVariation()
 {
-    this->displayStartTime();
-
     switch (this->variant) {
         case 1:
             this->executeVariant1();
@@ -25,8 +23,6 @@ void VariationManager::executeVariation()
     }
 
     this->joinAllThreads();
-
-    this->displayEndTime();
 }
 
 void VariationManager::executeVariant1()
@@ -36,18 +32,27 @@ void VariationManager::executeVariant1()
     int start = 0;
     int end = range;
 
+    color.green();
+    cout << "All Prime Numbers: " << endl;
+    color.reset();
+
     for (int t = 0; t < this->numThreads; t++) {
         if (t == this->numThreads - 1) {
             end = this->targetNumber;
         }
 
-        this->threads.emplace_back(t, std::thread(&ASearch::searchPrimes, searchMethod, start, end, t, std::ref(this->printer), 'R', std::ref(dummyFlag)));
+        this->threads.emplace_back(t, std::thread(&ASearch::searchPrimes, searchMethod, start, end, t, std::ref(this->printer), std::ref(dummyFlag)));
 
         start = end + 1;
         end = start + range - 1;
     }
 
     this->joinAllThreads();
+
+    color.green();
+    cout << "End of Prime Numbers" << endl;
+    cout << endl;
+    color.reset();
 }
 
 void VariationManager::executeVariant2()
@@ -62,7 +67,7 @@ void VariationManager::executeVariant2()
             end = this->targetNumber;
         }
 
-        this->threads.emplace_back(t, std::thread(&ASearch::searchPrimes, searchMethod, start, end, t, std::ref(this->printer), 'R', std::ref(dummyFlag)));
+        this->threads.emplace_back(t, std::thread(&ASearch::searchPrimes, searchMethod, start, end, t, std::ref(this->printer), std::ref(dummyFlag)));
 
         start = end + 1;
         end = start + range - 1;
@@ -71,16 +76,23 @@ void VariationManager::executeVariant2()
     this->joinAllThreads();
 
     color.green();
-    cout << "Printing all primes..." << endl;
+    cout << "All Prime Numbers: " << endl;
     color.reset();
     
-    this->printer->printPrimes(0, 0, 'R');
+    this->printer->printPrimes(0, 0);
+
+    color.green();
+    cout << "End of Prime Numbers" << endl;
+    cout << endl;
+    color.reset();
 }
 
 void VariationManager::executeVariant3()
 {
     std::vector<int> allPrimes;
     std::atomic<bool> isPrimeFlag = true;
+
+    this->displayStartTime();   // Display start time
 
     for (int i = 1; i <= this->targetNumber; i++) {
 
@@ -92,7 +104,7 @@ void VariationManager::executeVariant3()
         }
 
         for (int t = 0; t < this->numThreads; t++) {
-            threads.emplace_back(t, std::thread(&ASearch::searchPrimes, searchMethod, i, i, t, std::ref(this->printer), 'L', std::ref(isPrimeFlag)));
+            threads.emplace_back(t, std::thread(&ASearch::searchPrimes, searchMethod, i, i, t, std::ref(this->printer), std::ref(isPrimeFlag)));
         }
 
         this->joinAllThreads();
@@ -125,12 +137,16 @@ void VariationManager::executeVariant3()
     }
     cout << endl;
     color.reset();
+
+    this->displayEndTime();     // Display end time
 }
 
 void VariationManager::executeVariant4()
 {
     std::vector<int> allPrimes;
     std::atomic<bool> isPrimeFlag = true;
+
+    this->displayStartTime();   // Display start time
 
     for (int i = 1; i <= this->targetNumber; i++) {
 
@@ -142,7 +158,7 @@ void VariationManager::executeVariant4()
         }
 
         for (int t = 0; t < this->numThreads; t++) {
-            threads.emplace_back(t, std::thread(&ASearch::searchPrimes, searchMethod, i, i, t, std::ref(this->printer), 'L', std::ref(isPrimeFlag)));
+            threads.emplace_back(t, std::thread(&ASearch::searchPrimes, searchMethod, i, i, t, std::ref(this->printer), std::ref(isPrimeFlag)));
         }
 
         this->joinAllThreads();
@@ -155,7 +171,7 @@ void VariationManager::executeVariant4()
         // reset the flag
         isPrimeFlag = true;
 
-        this->printer->printPrimes(0, 0, 'L');
+        this->printer->printPrimes(0, 0);
     }
 
     this->joinAllThreads();
@@ -167,6 +183,8 @@ void VariationManager::executeVariant4()
     }
     cout << endl;
     color.reset();
+
+    this->displayEndTime();     // Display end time
 }
 
 void VariationManager::joinAllThreads()

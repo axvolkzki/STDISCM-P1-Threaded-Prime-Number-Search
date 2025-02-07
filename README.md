@@ -10,10 +10,10 @@ This program demonstrates essential threading concepts by creating a configurabl
 
 ## Video Demonstration of the Four Variants
 The demonstration of all variants are accessible in the following:
-- Variant 1 **[A1B1]** : [![Variant 1](https://raw.githubusercontent.com/axvolkzki/STDISCM-P1-Threaded-Prime-Number-Search/main/VideoDemo/VideoDemoThumbnail.png)](https://raw.githubusercontent.com/axvolkzki/STDISCM-P1-Threaded-Prime-Number-Search/main/VideoDemo/Variant1.mp4)
-- Variant 2 **[A2B1]** : [![Variant 2](https://raw.githubusercontent.com/axvolkzki/STDISCM-P1-Threaded-Prime-Number-Search/main/VideoDemo/VideoDemoThumbnail.png)](https://raw.githubusercontent.com/axvolkzki/STDISCM-P1-Threaded-Prime-Number-Search/main/VideoDemo/Variant2.mp4)
-- Variant 3 **[A1B2]** : [![Variant 3](https://raw.githubusercontent.com/axvolkzki/STDISCM-P1-Threaded-Prime-Number-Search/main/VideoDemo/VideoDemoThumbnail.png)](https://raw.githubusercontent.com/axvolkzki/STDISCM-P1-Threaded-Prime-Number-Search/main/VideoDemo/Variant3.mp4)
-- Variant 4 **[A2B2]** : [![Variant 4](https://raw.githubusercontent.com/axvolkzki/STDISCM-P1-Threaded-Prime-Number-Search/main/VideoDemo/VideoDemoThumbnail.png)](https://raw.githubusercontent.com/axvolkzki/STDISCM-P1-Threaded-Prime-Number-Search/main/VideoDemo/Variant4.mp4)
+- Variant 1 **[A1B1]** : [![Variant 1](https://raw.githubusercontent.com/axvolkzki/STDISCM-P1-Threaded-Prime-Number-Search/main/VideoDemo/VideoDemoThumbnail.png)](https://raw.githubusercontent.com/axvolkzki/STDISCM-P1-Threaded-Prime-Number-Search/main/VideoDemo/VariantOne.mp4)
+- Variant 2 **[A2B1]** : [![Variant 2](https://raw.githubusercontent.com/axvolkzki/STDISCM-P1-Threaded-Prime-Number-Search/main/VideoDemo/VideoDemoThumbnail.png)](https://raw.githubusercontent.com/axvolkzki/STDISCM-P1-Threaded-Prime-Number-Search/main/VideoDemo/VariantTwo.mp4)
+- Variant 3 **[A1B2]** : [![Variant 3](https://raw.githubusercontent.com/axvolkzki/STDISCM-P1-Threaded-Prime-Number-Search/main/VideoDemo/VideoDemoThumbnail.png)](https://raw.githubusercontent.com/axvolkzki/STDISCM-P1-Threaded-Prime-Number-Search/main/VideoDemo/VariantThree.mp4)
+- Variant 4 **[A2B2]** : [![Variant 4](https://raw.githubusercontent.com/axvolkzki/STDISCM-P1-Threaded-Prime-Number-Search/main/VideoDemo/VideoDemoThumbnail.png)](https://raw.githubusercontent.com/axvolkzki/STDISCM-P1-Threaded-Prime-Number-Search/main/VideoDemo/VariantFour.mp4)
 
 ## Four Variants in the Directory
 - Print Modes:

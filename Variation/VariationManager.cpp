@@ -94,22 +94,21 @@ void VariationManager::executeVariant2()
 
 void VariationManager::executeVariant3()
 {
-    std::vector<int> allPrimes;
     std::atomic<bool> isPrimeFlag = true;
 
-    for (int i = 1; i <= this->targetNumber; i++) {
 
-        // {
-        //     lock_guard<mutex> lock(this->variationMutex);
-        //     color.yellow();
-        //     cout << "\nChecking: " << i << endl;
-        //     color.reset();
-        // }
+    for (int i = 2; i <= this->targetNumber; i++) {
+
+        isPrimeFlag = true;
+
+        if (i == 2) {
+            this->printer->logPrime(i, 0);
+            continue;
+        }
 
         for (int t = 0; t < this->numThreads; t++) {
             threads.emplace_back(t, std::thread(&ASearch::searchPrimes, searchMethod, i, i, t, std::ref(this->printer), std::ref(isPrimeFlag)));
 
-            // if the 
         }
 
         this->joinAllThreads();
@@ -134,20 +133,11 @@ void VariationManager::executeVariant3()
         //     // allPrimes.push_back(i);
         //     this->printer->logPrime(i, 0);
         // }
-
-        // reset the flag
-        isPrimeFlag = true;
     }
 
     this->joinAllThreads();
 
-    // color.green();
-    // cout << "\nAll primes: ";
-    // for (auto prime : allPrimes) {
-    //     cout << prime << " ";
-    // }
-    // cout << endl;
-    // color.reset();
+    cout << endl;
 }
 
 void VariationManager::executeVariant4()
@@ -157,7 +147,14 @@ void VariationManager::executeVariant4()
 
     this->displayStartTime();   // Display start time
 
-    for (int i = 1; i <= this->targetNumber; i++) {
+    for (int i = 2; i <= this->targetNumber; i++) {
+        
+        isPrimeFlag = true;
+
+        if (i == 2) {
+            this->printer->logPrime(i, 0);
+            continue;
+        }
 
         for (int t = 0; t < this->numThreads; t++) {
             threads.emplace_back(t, std::thread(&ASearch::searchPrimes, searchMethod, i, i, t, std::ref(this->printer), std::ref(isPrimeFlag)));
@@ -165,14 +162,11 @@ void VariationManager::executeVariant4()
 
         this->joinAllThreads();
 
-        if (isPrimeFlag && i != 1) {
-            this->printer->logPrime(i, 0);
-        }
+        // if (isPrimeFlag && i != 1) {
+        //     this->printer->logPrime(i, 0);
+        // }
 
-        // reset the flag
-        isPrimeFlag = true;
 
-        // this->printer->printPrimes(0, 0);
     }
 
     this->joinAllThreads();

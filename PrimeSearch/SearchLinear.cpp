@@ -7,11 +7,12 @@
 void SearchLinear::searchPrimes(int start, int end, int threadID, APrint *printer, std::atomic<bool> &isPrimeFlag)
 {
     int numThreads = GlobalConfig::getInstance()->getNumberOfThreads();
+    bool isLastThread = false; 
 
     for (int divisor = threadID + 2; divisor < start; divisor += numThreads) {
-        // if (!isPrimeFlag) {
-        //     return; // stop immediately the thread if the number is not a prime number
-        // }
+        if (!isPrimeFlag) {
+            return; // stop immediately the thread if the number is not a prime number
+        }
 
         // {
         //     lock_guard<mutex> lock(this->searchMutex);
@@ -22,6 +23,14 @@ void SearchLinear::searchPrimes(int start, int end, int threadID, APrint *printe
             isPrimeFlag = false;
             return;
         }
+
+        if (divisor == start - 1) {
+            isLastThread = true;
+        }
+    }
+
+    if (isPrimeFlag && isLastThread) {
+        printer->logPrime(start, threadID);
     }
 
 }

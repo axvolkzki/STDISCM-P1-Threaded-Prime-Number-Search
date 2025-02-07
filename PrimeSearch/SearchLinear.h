@@ -14,7 +14,7 @@ class SearchLinear : public ASearch
 {
 public:
     SearchLinear() = default;
-    void searchPrimes(int start, int end, int threadID, APrint* printer, char variant, std::atomic<bool>& isPrimeFlag) override;
+    void searchPrimes(int start, int end, int threadID, APrint* printer, std::atomic<bool>& isPrimeFlag) override;
     
 private:
     Colors colors;

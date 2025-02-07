@@ -33,6 +33,4 @@ private:
     
     bool validateThreadCount(int threadCount);			// Validates the thread count
     bool validateTargetNumber(int targetNumber);			// Validates the target number
-    
-    bool parseConfigFile(String& line);					// Parses the config file
 };

@@ -8,22 +8,13 @@
 using namespace chrono;
 
 
-void PrintImmediately::logPrime(int prime, int threadId, char variant) {
-    printPrimes(prime, threadId, variant);
+void PrintImmediately::logPrime(int prime, int threadId) {
+    printPrimes(prime, threadId);
 }
 
-void PrintImmediately::printPrimes(int prime, int threadId, char variant)
+void PrintImmediately::printPrimes(int prime, int threadId)
 {
     lock_guard<mutex> lock(printMutex);
-    switch (variant) {
-        case 'R':
-            cout << GlobalConfig::getInstance()->getTimestamp() << " [Thread " << threadId << "] Prime Found: " << prime << endl;
-            break;
-        case 'L':
-            cout << GlobalConfig::getInstance()->getTimestamp() << " [Thread " << threadId << "] Checking divisibility for: " << prime << endl;
-            break;
-    };
-
-    // delay to simulate processing time
-    this_thread::sleep_for(milliseconds(100));
+    cout << GlobalConfig::getInstance()->getTimestamp() << "\t" << "[Thread " << threadId << "]" << "\t" << "Prime Found: " << prime << endl;
+    this_thread::sleep_for(milliseconds(100));  // Delay to simulate processing time
 }

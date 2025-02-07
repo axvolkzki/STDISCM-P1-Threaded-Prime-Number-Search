@@ -5,6 +5,7 @@
 #include <sstream>
 #include <iomanip>
 #include <chrono>
+#include <ctime>
 
 
 GlobalConfig* GlobalConfig::sharedInstance = nullptr;
@@ -40,30 +41,6 @@ void GlobalConfig::destroy()
 bool GlobalConfig::loadConfigFile(String &filename)
 {
     bool isLoaded = false;
-
-	// try {
-	// 	ifstream file(filename);
-	// 	if (!file.is_open()) {
-	// 		throw runtime_error("Error: Could not open file " + filename);
-	// 	}
-	// 	else {
-	// 		String line;
-	// 		while (getline(file, line)) {
-	// 			if (!parseConfigFile(line)) {
-	// 				throw runtime_error("Error: Could not parse line " + line);
-	// 				file.close();
-	// 				break;
-	// 			}
-	// 		}
-
-	// 		file.close();
-	// 		isLoaded = true;
-	// 	}
-	// }
-	// catch (const runtime_error& e) {
-	// 	cerr << e.what() << endl;
-	// 	isLoaded = false;
-	// }
 
     std::ifstream file(filename);
     String keyThread, keyTarget;
@@ -125,13 +102,34 @@ int GlobalConfig::getTargetNumber() const {
 
 String GlobalConfig::getTimestamp() const
 {
-    auto now = chrono::system_clock::now();
-    time_t currentTime = chrono::system_clock::to_time_t(now);
-    tm localTime;
+    // milliseconds
+    // auto now = chrono::system_clock::now();
+    // auto ms = chrono::duration_cast<chrono::milliseconds>(now.time_since_epoch()) % 1000;
+
+    // time_t currentTime = chrono::system_clock::to_time_t(now);
+
+    // tm localTime;
+    // localtime_s(&localTime, &currentTime);
+
+    // stringstream time;
+    // time << put_time(&localTime, "%I:%M:%S") << '.' << setfill('0') << setw(3) << ms.count();
+
+    // return time.str();
+
+    // nanoseconds
+    auto now = std::chrono::system_clock::now();
+    auto duration = now.time_since_epoch();
+    auto ns = std::chrono::duration_cast<std::chrono::nanoseconds>(duration) % 1000000000; // Nanoseconds part
+
+    std::time_t currentTime = std::chrono::system_clock::to_time_t(now);
+
+    std::tm localTime;
     localtime_s(&localTime, &currentTime);
 
-    stringstream time;
-    time << put_time(&localTime, "%I:%M:%S %p");
+    std::stringstream time;
+    time << std::put_time(&localTime, "%I:%M:%S") << '.' 
+         << std::setfill('0') << std::setw(9) << ns.count(); // 9 digits for nanoseconds
+
     return time.str();
 }
 
@@ -142,41 +140,3 @@ bool GlobalConfig::validateThreadCount(int threadCount) {
 bool GlobalConfig::validateTargetNumber(int targetNumber) {
     return targetNumber > 0;
 }
-
-bool GlobalConfig::parseConfigFile(String& line) {
-	bool isParsed = false;
-
-	// istringstream iss(line);
-	// String key;
-
-	// if (!(iss >> key)) {
-    //     return isParsed;
-    // }
-
-    // try {
-    //     if (key == "x") {
-    //         int value;
-    //         if (iss >> value) {
-    //             this->configData.numberOfThreads = value;
-    //             isParsed = true;
-    //         }
-    //     }
-    //     else if (key == "y") {
-    //         int value;
-    //         if (iss >> value) {
-    //             this->configData.targetNumber = value;
-    //             isParsed = true;
-    //         }
-    //     }
-    //     else {
-    //         throw invalid_argument("Unknown configuration key: " + key);
-    //     }
-    // }
-    // catch (const invalid_argument& e) {
-    //     cerr << "Error: " << e.what() << " in line: " << line << endl;
-	// 	isParsed = false;
-    // }
-
-    return isParsed;
-}
-

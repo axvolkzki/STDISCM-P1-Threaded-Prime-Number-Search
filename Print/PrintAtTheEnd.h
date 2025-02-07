@@ -3,7 +3,6 @@
 #include <chrono>
 #include <mutex>
 #include <vector>
-#include <tuple>
 
 #include "../TypeDefRepo.h"
 #include "../Config/GlobalConfig.h"
@@ -19,6 +18,5 @@ public:
 
 private:
     std::mutex printMutex;
-    // std::vector<std::tuple<int, int, std::chrono::time_point<std::chrono::system_clock>>> primes;
     std::vector<int> allPrimes;
 };
